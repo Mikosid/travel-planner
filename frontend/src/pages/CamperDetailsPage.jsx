@@ -5,7 +5,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchCamperById } from "../features/campers/camperDetailsThunks";
 import { clearCamperDetails } from "../features/campers/camperDetailsSlice";
 import noImage from "../assets/no image (1).jpg";
-import Reviews from "../components/Reviews/Reviews";
 import CamperTabs from "../components/CamperTabs/CamperTabs";
 import FeaturesSection from "../components/FeaturesSection/FeaturesSection";
 import ReviewsSection from "../components/ReviewsSection/ReviewsSection";
