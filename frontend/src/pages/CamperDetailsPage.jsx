@@ -79,37 +79,63 @@ export default function CamperDetailsPage() {
       {/* Tabs */}
       <CamperTabs activeTab={activeTab} onChange={setActiveTab} />
 
-      {/* Features */}
-      {activeTab === "features" && <FeaturesSection camper={camper} />}
-
-      {/* Reviews */}
-      {activeTab === "reviews" && <ReviewsSection reviews={camper.reviews} />}
-
-      {/* Booking form */}
-      <h2>Book this camper</h2>
-      {bookingSuccess && <p style={{ color: "green" }}>Booking successful!</p>}
-      <form
-        onSubmit={handleBookingSubmit}
-        style={{ display: "flex", flexDirection: "column", gap: "10px" }}
+      <div
+        style={{
+          display: "flex",
+          gap: "40px",
+          marginTop: "20px",
+          alignItems: "flex-start",
+        }}
       >
-        <input
-          type="text"
-          placeholder="Your Name"
-          value={bookingName}
-          onChange={(e) => setBookingName(e.target.value)}
-          required
-        />
-        <input
-          type="email"
-          placeholder="Your Email"
-          value={bookingEmail}
-          onChange={(e) => setBookingEmail(e.target.value)}
-          required
-        />
-        <button type="submit" style={{ cursor: "pointer" }}>
-          Book Now
-        </button>
-      </form>
+        {/* LEFT SIDE */}
+        <div style={{ flex: 2 }}>
+          {activeTab === "features" && <FeaturesSection camper={camper} />}
+          {activeTab === "reviews" && (
+            <ReviewsSection reviews={camper.reviews} />
+          )}
+        </div>
+
+        {/* RIGHT SIDE */}
+        <div style={{ flex: 1 }}>
+          <h2>Book this camper</h2>
+
+          {bookingSuccess && (
+            <p style={{ color: "green" }}>Booking successful!</p>
+          )}
+
+          <form
+            onSubmit={handleBookingSubmit}
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              gap: "10px",
+              border: "1px solid #ccc",
+              padding: "20px",
+              borderRadius: "10px",
+            }}
+          >
+            <input
+              type="text"
+              placeholder="Your Name"
+              value={bookingName}
+              onChange={(e) => setBookingName(e.target.value)}
+              required
+            />
+
+            <input
+              type="email"
+              placeholder="Your Email"
+              value={bookingEmail}
+              onChange={(e) => setBookingEmail(e.target.value)}
+              required
+            />
+
+            <button type="submit" style={{ cursor: "pointer" }}>
+              Book Now
+            </button>
+          </form>
+        </div>
+      </div>
     </div>
   );
 }
