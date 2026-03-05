@@ -51,6 +51,13 @@ export default function CamperDetailsPage() {
   return (
     <div style={{ padding: "20px" }}>
       <h1>{camper.name}</h1>
+      <div style={{ display: "flex", gap: "20px", marginBottom: "10px" }}>
+        <span>
+          ⭐ {camper.rating} ({camper.reviews?.length || 0} Reviews)
+        </span>
+
+        <span>📍 {camper.location}</span>
+      </div>
       <p>Price: {Number(camper.price).toFixed(2)} €</p>
 
       {/* Галерея */}

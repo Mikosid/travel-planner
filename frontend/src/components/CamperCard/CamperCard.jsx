@@ -2,7 +2,8 @@ import { Link } from "react-router-dom";
 import noImage from "../../assets/no image (1).jpg";
 
 export default function CamperCard({ camper, isFavorite, onToggleFavorite }) {
-  const image = camper.gallery?.[0]?.original || noImage;
+  const firstImage = camper.gallery?.[0];
+  const image = firstImage?.original || firstImage || noImage;
 
   return (
     <div

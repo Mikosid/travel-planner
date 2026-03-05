@@ -7,18 +7,27 @@ export default function ReviewsSection({ reviews }) {
     <>
       <h2>Reviews</h2>
 
-      {reviews.map((r, idx) => (
-        <div
-          key={idx}
-          style={{ borderBottom: "1px solid #ccc", padding: "10px 0" }}
-        >
-          <p>
-            <strong>{r.reviewer_name}</strong>
-          </p>
-          <p>{r.comment}</p>
-          <p>{"⭐".repeat(r.reviewer_rating)}</p>
-        </div>
-      ))}
+      {reviews.map((review, idx) => {
+        const { reviewer_name, reviewer_rating, comment } = review;
+
+        return (
+          <div
+            key={`${reviewer_name}-${idx}`}
+            style={{ borderBottom: "1px solid #ccc", padding: "10px 0" }}
+          >
+            <p>
+              <strong>{reviewer_name}</strong>
+            </p>
+
+            <p>
+              {"⭐".repeat(reviewer_rating)}
+              {"☆".repeat(5 - reviewer_rating)}
+            </p>
+
+            <p>{comment}</p>
+          </div>
+        );
+      })}
     </>
   );
 }
