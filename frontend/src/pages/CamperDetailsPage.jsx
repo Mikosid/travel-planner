@@ -42,15 +42,23 @@ export default function CamperDetailsPage() {
   return (
     <div style={{ padding: "20px" }}>
       <h1>{camper.name}</h1>
+
       <RatingLocation
         rating={camper.rating}
         reviews={camper.reviews}
         location={camper.location}
       />
-      <p>Price: {Number(camper.price).toFixed(2)} €</p>
+
+      <p style={{ fontSize: "20px", fontWeight: "600" }}>
+        €{camper.price.toFixed(2)}
+      </p>
 
       {/* Галерея */}
       <CamperGallery gallery={camper.gallery} />
+
+      <p style={{ marginBottom: "30px", color: "#475467" }}>
+        {camper.description}
+      </p>
 
       {/* Tabs */}
       <CamperTabs activeTab={activeTab} onChange={setActiveTab} />
