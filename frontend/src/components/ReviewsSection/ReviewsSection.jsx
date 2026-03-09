@@ -4,30 +4,60 @@ export default function ReviewsSection({ reviews }) {
   }
 
   return (
-    <>
+    <div>
       <h2>Reviews</h2>
 
-      {reviews.map((review, idx) => {
-        const { reviewer_name, reviewer_rating, comment } = review;
+      {reviews.map((r, idx) => {
+        const initial = r.reviewer_name?.charAt(0).toUpperCase();
 
         return (
           <div
-            key={`${reviewer_name}-${idx}`}
-            style={{ borderBottom: "1px solid #ccc", padding: "10px 0" }}
+            key={idx}
+            style={{
+              borderBottom: "1px solid #eee",
+              padding: "16px 0",
+            }}
           >
-            <p>
-              <strong>{reviewer_name}</strong>
-            </p>
+            {/* Header */}
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                gap: "10px",
+                marginBottom: "6px",
+              }}
+            >
+              {/* Avatar */}
+              <div
+                style={{
+                  width: "36px",
+                  height: "36px",
+                  borderRadius: "50%",
+                  background: "#f2f4f7",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  fontWeight: "600",
+                }}
+              >
+                {initial}
+              </div>
 
-            <p>
-              {"⭐".repeat(reviewer_rating)}
-              {"☆".repeat(5 - reviewer_rating)}
-            </p>
+              {/* Name + rating */}
+              <div>
+                <div style={{ fontWeight: "600" }}>{r.reviewer_name}</div>
 
-            <p>{comment}</p>
+                <div style={{ fontSize: "14px" }}>
+                  {"⭐".repeat(r.reviewer_rating)}
+                </div>
+              </div>
+            </div>
+
+            {/* Comment */}
+            <p style={{ margin: 0 }}>{r.comment}</p>
           </div>
         );
       })}
-    </>
+    </div>
   );
 }
