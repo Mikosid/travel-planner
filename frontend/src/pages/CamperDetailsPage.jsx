@@ -8,6 +8,8 @@ import noImage from "../assets/no image (1).jpg";
 import CamperTabs from "../components/CamperTabs/CamperTabs";
 import FeaturesSection from "../components/FeaturesSection/FeaturesSection";
 import ReviewsSection from "../components/ReviewsSection/ReviewsSection";
+import RatingLocation from "../components/RatingLocation/RatingLocation";
+import BookingForm from "../components/BookingForm/BookingForm";
 
 export default function CamperDetailsPage() {
   const { id } = useParams();
@@ -21,9 +23,6 @@ export default function CamperDetailsPage() {
   } = useSelector((state) => state.camperDetails);
 
   // Локальний стан для форми бронювання
-  const [bookingName, setBookingName] = useState("");
-  const [bookingEmail, setBookingEmail] = useState("");
-  const [bookingSuccess, setBookingSuccess] = useState(false);
   const [activeTab, setActiveTab] = useState("features");
 
   useEffect(() => {
@@ -35,14 +34,6 @@ export default function CamperDetailsPage() {
     };
   }, [dispatch, id]);
 
-  const handleBookingSubmit = (e) => {
-    e.preventDefault();
-    setBookingSuccess(true);
-    setBookingName("");
-    setBookingEmail("");
-    setTimeout(() => setBookingSuccess(false), 3000);
-  };
-
   // Loader / Error
   if (isLoading) return <p>Loading camper...</p>;
   if (error) return <p style={{ color: "red" }}>Error: {error}</p>;
@@ -51,13 +42,11 @@ export default function CamperDetailsPage() {
   return (
     <div style={{ padding: "20px" }}>
       <h1>{camper.name}</h1>
-      <div style={{ display: "flex", gap: "20px", marginBottom: "10px" }}>
-        <span>
-          ⭐ {camper.rating} ({camper.reviews?.length || 0} Reviews)
-        </span>
-
-        <span>📍 {camper.location}</span>
-      </div>
+      <RatingLocation
+        rating={camper.rating}
+        reviews={camper.reviews}
+        location={camper.location}
+      />
       <p>Price: {Number(camper.price).toFixed(2)} €</p>
 
       {/* Галерея */}
@@ -97,43 +86,7 @@ export default function CamperDetailsPage() {
 
         {/* RIGHT SIDE */}
         <div style={{ flex: 1 }}>
-          <h2>Book this camper</h2>
-
-          {bookingSuccess && (
-            <p style={{ color: "green" }}>Booking successful!</p>
-          )}
-
-          <form
-            onSubmit={handleBookingSubmit}
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              gap: "10px",
-              border: "1px solid #ccc",
-              padding: "20px",
-              borderRadius: "10px",
-            }}
-          >
-            <input
-              type="text"
-              placeholder="Your Name"
-              value={bookingName}
-              onChange={(e) => setBookingName(e.target.value)}
-              required
-            />
-
-            <input
-              type="email"
-              placeholder="Your Email"
-              value={bookingEmail}
-              onChange={(e) => setBookingEmail(e.target.value)}
-              required
-            />
-
-            <button type="submit" style={{ cursor: "pointer" }}>
-              Book Now
-            </button>
-          </form>
+          <BookingForm />
         </div>
       </div>
     </div>
