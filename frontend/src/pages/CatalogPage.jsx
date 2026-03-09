@@ -30,7 +30,13 @@ const CatalogPage = () => {
 
       {error && <p style={{ color: "red" }}>{error}</p>}
 
-      <div style={{ display: "flex", flexWrap: "wrap", gap: "20px" }}>
+      <div
+        style={{
+          display: "grid",
+          gridTemplateColumns: "repeat(auto-fill, minmax(300px, 1fr))",
+          gap: "20px",
+        }}
+      >
         {items.length === 0 && !isLoading && <p>No campers found.</p>}
 
         {items.map((camper) => (
@@ -43,7 +49,7 @@ const CatalogPage = () => {
         ))}
       </div>
 
-      {isLoading && <p>Loading...</p>}
+      {isLoading && <p>Loading campers...</p>}
 
       {!isLoading && hasMore && items.length > 0 && (
         <button

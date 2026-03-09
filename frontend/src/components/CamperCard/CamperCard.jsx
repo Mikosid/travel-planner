@@ -9,17 +9,34 @@ export default function CamperCard({ camper, isFavorite, onToggleFavorite }) {
     <div
       style={{
         border: "1px solid #ccc",
-        padding: "10px",
-        width: "200px",
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
+        padding: "16px",
+        width: "280px",
       }}
     >
-      <img src={image} alt={camper.name} width="180" />
+      <img
+        src={image}
+        alt={camper.name}
+        style={{ width: "100%", borderRadius: "8px" }}
+      />
 
       <h3>{camper.name}</h3>
-      <p>{camper.price.toFixed(2)} €</p>
+
+      <p>
+        ⭐ {camper.rating} ({camper.reviews?.length || 0} Reviews)
+      </p>
+
+      <p>📍 {camper.location}</p>
+
+      <p style={{ fontWeight: "600" }}> € {camper.price.toFixed(2)}</p>
+
+      <p
+        style={{
+          fontSize: "14px",
+          color: "#666",
+        }}
+      >
+        {camper.description?.slice(0, 60)}...
+      </p>
 
       <button
         onClick={onToggleFavorite}

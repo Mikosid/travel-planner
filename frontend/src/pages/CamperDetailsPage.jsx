@@ -50,7 +50,7 @@ export default function CamperDetailsPage() {
       />
 
       <p style={{ fontSize: "20px", fontWeight: "600" }}>
-        €{camper.price.toFixed(2)}
+        € {camper.price.toFixed(2)}
       </p>
 
       {/* Галерея */}
