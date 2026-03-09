@@ -1,58 +1,120 @@
 import { useState } from "react";
 
 export default function BookingForm() {
-  const [bookingName, setBookingName] = useState("");
-  const [bookingEmail, setBookingEmail] = useState("");
-  const [bookingSuccess, setBookingSuccess] = useState(false);
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [date, setDate] = useState("");
+  const [comment, setComment] = useState("");
+  const [success, setSuccess] = useState(false);
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    setBookingSuccess(true);
+    setSuccess(true);
 
-    setBookingName("");
-    setBookingEmail("");
+    setName("");
+    setEmail("");
+    setDate("");
+    setComment("");
 
-    setTimeout(() => setBookingSuccess(false), 3000);
+    setTimeout(() => setSuccess(false), 3000);
   };
 
   return (
     <div
       style={{
-        border: "1px solid #ccc",
-        padding: "20px",
-        borderRadius: "10px",
+        border: "1px solid #E4E7EC",
+        padding: "24px",
+        borderRadius: "12px",
+        background: "#fff",
+        width: "100%",
+        maxWidth: "400px",
       }}
     >
-      <h2>Book this camper</h2>
+      <h3 style={{ marginBottom: "8px" }}>Book your camper now</h3>
 
-      {bookingSuccess && <p style={{ color: "green" }}>Booking successful!</p>}
+      <p style={{ fontSize: "14px", color: "#667085", marginBottom: "20px" }}>
+        Stay connected! We are always ready to help you.
+      </p>
+
+      {success && (
+        <p style={{ color: "green", marginBottom: "10px" }}>
+          Booking successful!
+        </p>
+      )}
 
       <form
         onSubmit={handleSubmit}
         style={{
           display: "flex",
           flexDirection: "column",
-          gap: "10px",
+          gap: "12px",
         }}
       >
         <input
           type="text"
-          placeholder="Your Name"
-          value={bookingName}
-          onChange={(e) => setBookingName(e.target.value)}
+          placeholder="Name*"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
           required
+          style={{
+            padding: "10px",
+            borderRadius: "8px",
+            border: "1px solid #ddd",
+          }}
         />
 
         <input
           type="email"
-          placeholder="Your Email"
-          value={bookingEmail}
-          onChange={(e) => setBookingEmail(e.target.value)}
+          placeholder="Email*"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
           required
+          style={{
+            padding: "10px",
+            borderRadius: "8px",
+            border: "1px solid #ddd",
+          }}
         />
 
-        <button type="submit">Book Now</button>
+        <input
+          type="date"
+          value={date}
+          onChange={(e) => setDate(e.target.value)}
+          required
+          style={{
+            padding: "10px",
+            borderRadius: "8px",
+            border: "1px solid #ddd",
+          }}
+        />
+
+        <textarea
+          placeholder="Comment"
+          value={comment}
+          onChange={(e) => setComment(e.target.value)}
+          rows={4}
+          style={{
+            padding: "10px",
+            borderRadius: "8px",
+            border: "1px solid #ddd",
+          }}
+        />
+
+        <button
+          type="submit"
+          style={{
+            padding: "12px",
+            borderRadius: "8px",
+            border: "none",
+            background: "#E44848",
+            color: "white",
+            fontWeight: "600",
+            cursor: "pointer",
+          }}
+        >
+          Send
+        </button>
       </form>
     </div>
   );
