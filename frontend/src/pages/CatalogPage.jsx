@@ -63,39 +63,60 @@ const CatalogPage = () => {
     <div style={{ padding: "20px" }}>
       <h1>Catalog</h1>
 
-      <Filters onApply={handleApplyFilters} />
-
-      {error && <p style={{ color: "red" }}>{error}</p>}
-
       <div
         style={{
           display: "grid",
-          gridTemplateColumns: "repeat(auto-fill, minmax(300px, 1fr))",
-          gap: "20px",
+          gridTemplateColumns: "300px 1fr",
+          gap: "40px",
+          alignItems: "start",
         }}
       >
-        {filteredCampers.length === 0 && !isLoading && <p>No campers found.</p>}
+        {/* LEFT SIDE */}
+        <div>
+          <Filters onApply={handleApplyFilters} />
+        </div>
 
-        {filteredCampers.map((camper) => (
-          <CamperCard
-            key={camper.id}
-            camper={camper}
-            isFavorite={favorites.includes(camper.id)}
-            onToggleFavorite={() => handleToggleFavorite(camper.id)}
-          />
-        ))}
+        {/* RIGHT SIDE */}
+        <div>
+          {error && <p style={{ color: "red" }}>{error}</p>}
+
+          <div
+            style={{
+              display: "grid",
+              gridTemplateColumns: "repeat(auto-fill, minmax(300px, 1fr))",
+              gap: "20px",
+            }}
+          >
+            {filteredCampers.length === 0 && !isLoading && (
+              <p>No campers found.</p>
+            )}
+
+            {filteredCampers.map((camper) => (
+              <CamperCard
+                key={camper.id}
+                camper={camper}
+                isFavorite={favorites.includes(camper.id)}
+                onToggleFavorite={() => handleToggleFavorite(camper.id)}
+              />
+            ))}
+          </div>
+        </div>
+
+        {isLoading && <p>Loading campers...</p>}
+
+        {!isLoading && hasMore && items.length > 0 && (
+          <button
+            onClick={handleLoadMore}
+            style={{
+              marginTop: "20px",
+              cursor: "pointer",
+              padding: "10px 20px",
+            }}
+          >
+            Load More
+          </button>
+        )}
       </div>
-
-      {isLoading && <p>Loading campers...</p>}
-
-      {!isLoading && hasMore && items.length > 0 && (
-        <button
-          onClick={handleLoadMore}
-          style={{ marginTop: "20px", cursor: "pointer", padding: "10px 20px" }}
-        >
-          Load More
-        </button>
-      )}
     </div>
   );
 };
