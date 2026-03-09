@@ -4,12 +4,12 @@ import { useDispatch, useSelector } from "react-redux";
 
 import { fetchCamperById } from "../features/campers/camperDetailsThunks";
 import { clearCamperDetails } from "../features/campers/camperDetailsSlice";
-import noImage from "../assets/no image (1).jpg";
 import CamperTabs from "../components/CamperTabs/CamperTabs";
 import FeaturesSection from "../components/FeaturesSection/FeaturesSection";
 import ReviewsSection from "../components/ReviewsSection/ReviewsSection";
 import RatingLocation from "../components/RatingLocation/RatingLocation";
 import BookingForm from "../components/BookingForm/BookingForm";
+import CamperGallery from "../components/CamperGallery/CamperGallery";
 
 export default function CamperDetailsPage() {
   const { id } = useParams();
@@ -50,20 +50,7 @@ export default function CamperDetailsPage() {
       <p>Price: {Number(camper.price).toFixed(2)} €</p>
 
       {/* Галерея */}
-      <div style={{ display: "flex", gap: "10px", marginBottom: "20px" }}>
-        {camper.gallery?.length > 0 ? (
-          camper.gallery.map((img, idx) => (
-            <img
-              key={idx}
-              src={img.original}
-              alt={`${camper.name} ${idx}`}
-              style={{ width: "150px", borderRadius: "8px" }}
-            />
-          ))
-        ) : (
-          <img src={noImage} alt="No image" />
-        )}
-      </div>
+      <CamperGallery gallery={camper.gallery} />
 
       {/* Tabs */}
       <CamperTabs activeTab={activeTab} onChange={setActiveTab} />

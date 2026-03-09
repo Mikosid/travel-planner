@@ -1,10 +1,31 @@
 export default function CamperTabs({ activeTab, onChange }) {
+  const tabStyle = {
+    padding: "10px 0",
+    cursor: "pointer",
+    border: "none",
+    background: "none",
+    fontSize: "16px",
+    fontWeight: "500",
+  };
+
+  const activeStyle = {
+    borderBottom: "2px solid red",
+  };
+
   return (
-    <div style={{ display: "flex", gap: "20px", margin: "20px 0" }}>
+    <div
+      style={{
+        display: "flex",
+        gap: "30px",
+        borderBottom: "1px solid #ddd",
+        marginTop: "20px",
+      }}
+    >
       <button
         onClick={() => onChange("features")}
         style={{
-          fontWeight: activeTab === "features" ? "bold" : "normal",
+          ...tabStyle,
+          ...(activeTab === "features" ? activeStyle : {}),
         }}
       >
         Features
@@ -13,7 +34,8 @@ export default function CamperTabs({ activeTab, onChange }) {
       <button
         onClick={() => onChange("reviews")}
         style={{
-          fontWeight: activeTab === "reviews" ? "bold" : "normal",
+          ...tabStyle,
+          ...(activeTab === "reviews" ? activeStyle : {}),
         }}
       >
         Reviews
