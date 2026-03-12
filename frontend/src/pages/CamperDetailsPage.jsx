@@ -35,7 +35,13 @@ export default function CamperDetailsPage() {
   }, [dispatch, id]);
 
   // Loader / Error
-  if (isLoading) return <p>Loading camper...</p>;
+  if (isLoading) {
+    return (
+      <div style={{ padding: "20px" }}>
+        <p>Loading camper...</p>
+      </div>
+    );
+  }
   if (error) return <p style={{ color: "red" }}>Error: {error}</p>;
   if (!camper) return <p>Camper not found.</p>;
 
@@ -50,11 +56,11 @@ export default function CamperDetailsPage() {
       />
 
       <p style={{ fontSize: "20px", fontWeight: "600" }}>
-        € {camper.price.toFixed(2)}
+        € {Number(camper.price).toFixed(2)}
       </p>
 
       {/* Галерея */}
-      <CamperGallery gallery={camper.gallery} />
+      <CamperGallery gallery={camper.gallery || []} />
 
       <p style={{ marginBottom: "30px", color: "#475467" }}>
         {camper.description}
@@ -81,7 +87,7 @@ export default function CamperDetailsPage() {
 
         {/* RIGHT SIDE */}
         <div style={{ flex: 1 }}>
-          <BookingForm />
+          <BookingForm camperId={camper.id} />
         </div>
       </div>
     </div>

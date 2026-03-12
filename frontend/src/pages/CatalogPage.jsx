@@ -1,21 +1,25 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchCampers } from "../features/campers/campersThunks"; // <-- thunk
-import { loadMore, toggleFavorite } from "../features/campers/campersSlice"; // <-- slice
+import { fetchCampers } from "../features/campers/campersThunks";
+import {
+  loadMore,
+  toggleFavorite,
+  setFilters,
+} from "../features/campers/campersSlice";
+
 import CamperCard from "../components/CamperCard/CamperCard";
 import Filters from "../components/Filters/Filters";
+import SkeletonCard from "../components/CamperCard/SkeletonCard";
 
 const CatalogPage = () => {
   const dispatch = useDispatch();
-  const { items, isLoading, error, page, favorites, hasMore } = useSelector(
-    (state) => state.campers,
-  );
 
-  const [filters, setFilters] = useState(null);
+  const { items, isLoading, error, page, favorites, hasMore, filters } =
+    useSelector((state) => state.campers);
 
   useEffect(() => {
-    dispatch(fetchCampers({ page }));
-  }, [dispatch, page]);
+    dispatch(fetchCampers({ page, filters }));
+  }, [dispatch, page, filters]);
 
   const handleLoadMore = () => {
     if (!isLoading && hasMore) {
@@ -28,36 +32,9 @@ const CatalogPage = () => {
   };
 
   const handleApplyFilters = (data) => {
-    setFilters(data);
+    dispatch(setFilters(data));
+    dispatch(fetchCampers({ page: 1, filters: data }));
   };
-
-  const filteredCampers = items.filter((camper) => {
-    if (!filters) return true;
-
-    // LOCATION
-    if (
-      filters.location &&
-      !camper.location?.toLowerCase().includes(filters.location.toLowerCase())
-    ) {
-      return false;
-    }
-
-    // VEHICLE TYPE
-    if (filters.vehicleType && camper.form !== filters.vehicleType) {
-      return false;
-    }
-
-    // EQUIPMENT
-    if (filters.equipment) {
-      for (const key in filters.equipment) {
-        if (filters.equipment[key] && !camper[key]) {
-          return false;
-        }
-      }
-    }
-
-    return true;
-  });
 
   return (
     <div style={{ padding: "20px" }}>
@@ -71,12 +48,12 @@ const CatalogPage = () => {
           alignItems: "start",
         }}
       >
-        {/* LEFT SIDE */}
+        {/* FILTERS */}
         <div>
           <Filters onApply={handleApplyFilters} />
         </div>
 
-        {/* RIGHT SIDE */}
+        {/* CAMPERS */}
         <div>
           {error && <p style={{ color: "red" }}>{error}</p>}
 
@@ -87,11 +64,7 @@ const CatalogPage = () => {
               gap: "20px",
             }}
           >
-            {filteredCampers.length === 0 && !isLoading && (
-              <p>No campers found.</p>
-            )}
-
-            {filteredCampers.map((camper) => (
+            {items.map((camper) => (
               <CamperCard
                 key={camper.id}
                 camper={camper}
@@ -99,24 +72,27 @@ const CatalogPage = () => {
                 onToggleFavorite={() => handleToggleFavorite(camper.id)}
               />
             ))}
+
+            {isLoading && [...Array(4)].map((_, i) => <SkeletonCard key={i} />)}
           </div>
+
+          {!isLoading && items.length === 0 && <p>No campers found.</p>}
         </div>
+      </div>
 
-        {isLoading && <p>Loading campers...</p>}
-
-        {!isLoading && hasMore && items.length > 0 && (
+      {!isLoading && hasMore && items.length > 0 && (
+        <div style={{ textAlign: "center", marginTop: "30px" }}>
           <button
             onClick={handleLoadMore}
             style={{
-              marginTop: "20px",
               cursor: "pointer",
-              padding: "10px 20px",
+              padding: "10px 24px",
             }}
           >
             Load More
           </button>
-        )}
-      </div>
+        </div>
+      )}
     </div>
   );
 };

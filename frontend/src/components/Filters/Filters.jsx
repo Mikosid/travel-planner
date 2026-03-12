@@ -20,11 +20,18 @@ export default function Filters({ onApply }) {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    onApply({
-      location,
-      vehicleType,
-      equipment,
+    const filters = {};
+
+    if (location) filters.location = location;
+    if (vehicleType) filters.form = vehicleType;
+
+    Object.keys(equipment).forEach((key) => {
+      if (equipment[key]) {
+        filters[key] = true;
+      }
     });
+
+    onApply(filters);
   };
 
   return (

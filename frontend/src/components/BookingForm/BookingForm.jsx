@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-export default function BookingForm() {
+export default function BookingForm({ camperId }) {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [date, setDate] = useState("");
@@ -9,6 +9,8 @@ export default function BookingForm() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    console.log("Booking for camper:", camperId);
 
     setSuccess(true);
 

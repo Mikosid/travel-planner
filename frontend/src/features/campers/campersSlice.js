@@ -40,11 +40,20 @@ const campersSlice = createSlice({
         state.isLoading = true;
         state.error = null;
       })
+      // .addCase(fetchCampers.fulfilled, (state, action) => {
+      //   state.isLoading = false;
+      //   const data = Array.isArray(action.payload) ? action.payload : [];
+      //   state.items = state.page === 1 ? data : [...state.items, ...data];
+      //   state.hasMore = data.length === state.limit;
+      // })
       .addCase(fetchCampers.fulfilled, (state, action) => {
         state.isLoading = false;
-        const data = Array.isArray(action.payload) ? action.payload : [];
-        state.items = state.page === 1 ? data : [...state.items, ...data];
-        state.hasMore = data.length > 0;
+
+        const { items, total } = action.payload;
+
+        state.items = state.page === 1 ? items : [...state.items, ...items];
+
+        state.hasMore = state.items.length < total;
       })
       .addCase(fetchCampers.rejected, (state, action) => {
         state.isLoading = false;

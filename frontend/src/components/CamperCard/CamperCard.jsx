@@ -46,7 +46,9 @@ export default function CamperCard({ camper, isFavorite, onToggleFavorite }) {
       >
         <h3 style={{ margin: 0 }}>{camper.name}</h3>
 
-        <span style={{ fontWeight: "600" }}>€{camper.price.toFixed(2)}</span>
+        <span style={{ fontWeight: "600" }}>
+          € {Number(camper.price).toFixed(2)}
+        </span>
       </div>
 
       {/* RATING + LOCATION */}
@@ -117,19 +119,21 @@ export default function CamperCard({ camper, isFavorite, onToggleFavorite }) {
           {isFavorite ? "★ Favorite" : "☆ Favorite"}
         </button>
 
-        <Link to={`/catalog/${camper.id}`}>
-          <button
-            style={{
-              cursor: "pointer",
-              padding: "8px 14px",
-              borderRadius: "6px",
-              border: "none",
-              background: "#333",
-              color: "white",
-            }}
-          >
-            Show more
-          </button>
+        <Link
+          to={`/catalog/${camper.id}`}
+          target="_blank"
+          rel="noopener noreferrer"
+          style={{
+            cursor: "pointer",
+            padding: "8px 14px",
+            borderRadius: "6px",
+            background: "#333",
+            color: "white",
+            textDecoration: "none",
+            display: "inline-block",
+          }}
+        >
+          Show more
         </Link>
       </div>
     </div>
