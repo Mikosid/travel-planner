@@ -53,7 +53,11 @@ const campersSlice = createSlice({
 
         state.items = state.page === 1 ? items : [...state.items, ...items];
 
-        state.hasMore = state.items.length < total;
+        if (typeof total === "number" && total >= 0) {
+          state.hasMore = state.items.length < total;
+        } else {
+          state.hasMore = items.length === state.limit;
+        }
       })
       .addCase(fetchCampers.rejected, (state, action) => {
         state.isLoading = false;

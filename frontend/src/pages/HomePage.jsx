@@ -1,41 +1,28 @@
 import { Link } from "react-router-dom";
+import heroImg from "../assets/Campers_photo.jpg";
+import styles from "./HomePage.module.css";
 
 export default function HomePage() {
   return (
-    <div
+    <section
+      className={styles.hero}
       style={{
-        height: "80vh",
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "center",
-        alignItems: "center",
-        background: "#f6f7fb",
-        textAlign: "center",
-        padding: "20px",
+        backgroundImage: `linear-gradient(rgba(0,0,0,0.45), rgba(0,0,0,0.45)), url(${heroImg})`,
       }}
     >
-      <h1 style={{ fontSize: "42px", marginBottom: "20px" }}>
-        Find your perfect camper
-      </h1>
+      <div className={styles.container}>
+        <div className={styles.content}>
+          <h1 className={styles.title}>Campers of your dreams</h1>
 
-      <p style={{ fontSize: "18px", marginBottom: "30px", maxWidth: "600px" }}>
-        Discover the best campers for your next adventure. Comfortable, reliable
-        and ready for the road.
-      </p>
+          <p className={styles.text}>
+            You can find everything you want in our catalog
+          </p>
 
-      <Link
-        to="/catalog"
-        style={{
-          padding: "14px 28px",
-          background: "#E44848",
-          color: "white",
-          textDecoration: "none",
-          borderRadius: "8px",
-          fontWeight: "600",
-        }}
-      >
-        View Now
-      </Link>
-    </div>
+          <Link to="/catalog" className={styles.button}>
+            View Now
+          </Link>
+        </div>
+      </div>
+    </section>
   );
 }

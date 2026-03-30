@@ -3,9 +3,11 @@ export default function CamperTabs({ activeTab, onChange }) {
     padding: "10px 0",
     cursor: "pointer",
     border: "none",
+    borderBottom: "2px solid transparent",
     background: "none",
     fontSize: "16px",
     fontWeight: "500",
+    outline: "none",
   };
 
   const activeStyle = {

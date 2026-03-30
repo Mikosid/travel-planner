@@ -33,7 +33,6 @@ const CatalogPage = () => {
 
   const handleApplyFilters = (data) => {
     dispatch(setFilters(data));
-    dispatch(fetchCampers({ page: 1, filters: data }));
   };
 
   return (

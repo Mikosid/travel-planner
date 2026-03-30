@@ -39,11 +39,15 @@ export const fetchCampers = createAsyncThunk(
         ...filters,
       };
 
-      const { data } = await getCampers(params);
+      const response = await getCampers(params);
+      const data = response.data;
+
+      const items = Array.isArray(data) ? data : data.items || [];
+      const total = typeof data.total === "number" ? data.total : null;
 
       return {
-        items: data.items || [],
-        total: data.total || 0,
+        items,
+        total,
       };
     } catch (error) {
       return thunkAPI.rejectWithValue(error.response?.data || error.message);

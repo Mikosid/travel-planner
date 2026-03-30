@@ -2,7 +2,7 @@ import { Routes, Route } from "react-router-dom";
 import HomePage from "../pages/HomePage";
 import CatalogPage from "../pages/CatalogPage";
 import CamperDetailsPage from "../pages/CamperDetailsPage";
-import Layout from "../components/Layout";
+import Layout from "../components/Layout/Layout";
 
 export default function AppRouter() {
   return (
