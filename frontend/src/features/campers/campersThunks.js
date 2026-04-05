@@ -35,9 +35,26 @@ export const fetchCampers = createAsyncThunk(
       const params = {
         page: page ?? state.page,
         limit: limit ?? state.limit,
-        ...state.filters,
-        ...filters,
       };
+
+      // Додаємо тільки валідні параметри фільтрації
+      const allFilters = { ...state.filters, ...filters };
+      const supportedFilterKeys = [
+        "location",
+        "type",
+        "AC",
+        "kitchen",
+        "TV",
+        "bathroom",
+      ];
+
+      Object.keys(allFilters).forEach((key) => {
+        if (supportedFilterKeys.includes(key) && allFilters[key]) {
+          params[key] = allFilters[key];
+        }
+      });
+
+      console.log("📤 Параметри запиту:", params);
 
       const response = await getCampers(params);
       const data = response.data;
@@ -50,6 +67,7 @@ export const fetchCampers = createAsyncThunk(
         total,
       };
     } catch (error) {
+      console.error("❌ Помилка API:", error);
       return thunkAPI.rejectWithValue(error.response?.data || error.message);
     }
   },

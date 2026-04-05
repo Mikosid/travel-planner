@@ -23,7 +23,7 @@ export default function Filters({ onApply }) {
     const filters = {};
 
     if (location) filters.location = location;
-    if (vehicleType) filters.form = vehicleType;
+    if (vehicleType) filters.type = vehicleType; // ✅ змінено з 'form' на 'type'
 
     Object.keys(equipment).forEach((key) => {
       if (equipment[key]) {
