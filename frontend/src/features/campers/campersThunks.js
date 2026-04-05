@@ -54,8 +54,6 @@ export const fetchCampers = createAsyncThunk(
         }
       });
 
-      console.log("📤 Параметри запиту:", params);
-
       const response = await getCampers(params);
       const data = response.data;
 
