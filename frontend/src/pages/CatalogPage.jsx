@@ -10,6 +10,7 @@ import {
 import CamperCard from "../components/CamperCard/CamperCard";
 import Filters from "../components/Filters/Filters";
 import SkeletonCard from "../components/CamperCard/SkeletonCard";
+import styles from "./CatalogPage.module.css";
 
 const CatalogPage = () => {
   const dispatch = useDispatch();
@@ -36,33 +37,18 @@ const CatalogPage = () => {
   };
 
   return (
-    <div style={{ padding: "20px" }}>
-      <h1>Catalog</h1>
-
-      <div
-        style={{
-          display: "grid",
-          gridTemplateColumns: "300px 1fr",
-          gap: "40px",
-          alignItems: "start",
-        }}
-      >
+    <div className={styles.catalogPage}>
+      <div className={styles.catalogLayout}>
         {/* FILTERS */}
-        <div>
+        <div className={styles.catalogFilters}>
           <Filters onApply={handleApplyFilters} />
         </div>
 
         {/* CAMPERS */}
-        <div>
-          {error && <p style={{ color: "red" }}>{error}</p>}
+        <div className={styles.catalogResults}>
+          {error && <p className={styles.catalogError}>{error}</p>}
 
-          <div
-            style={{
-              display: "grid",
-              gridTemplateColumns: "repeat(auto-fill, minmax(300px, 1fr))",
-              gap: "20px",
-            }}
-          >
+          <div className={styles.catalogGrid}>
             {items.map((camper) => (
               <CamperCard
                 key={camper.id}
@@ -75,18 +61,17 @@ const CatalogPage = () => {
             {isLoading && [...Array(4)].map((_, i) => <SkeletonCard key={i} />)}
           </div>
 
-          {!isLoading && items.length === 0 && <p>No campers found.</p>}
+          {!isLoading && items.length === 0 && (
+            <p className={styles.catalogEmpty}>No campers found.</p>
+          )}
         </div>
       </div>
 
       {!isLoading && hasMore && items.length > 0 && (
-        <div style={{ textAlign: "center", marginTop: "30px" }}>
+        <div className={styles.catalogLoadMoreWrapper}>
           <button
             onClick={handleLoadMore}
-            style={{
-              cursor: "pointer",
-              padding: "10px 24px",
-            }}
+            className={styles.catalogLoadMoreButton}
           >
             Load More
           </button>

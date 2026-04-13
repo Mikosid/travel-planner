@@ -10,6 +10,7 @@ import ReviewsSection from "../components/ReviewsSection/ReviewsSection";
 import RatingLocation from "../components/RatingLocation/RatingLocation";
 import BookingForm from "../components/BookingForm/BookingForm";
 import CamperGallery from "../components/CamperGallery/CamperGallery";
+import styles from "./CamperDetailsPage.module.css";
 
 export default function CamperDetailsPage() {
   const { id } = useParams();
@@ -24,6 +25,10 @@ export default function CamperDetailsPage() {
 
   // Локальний стан для форми бронювання
   const [activeTab, setActiveTab] = useState("features");
+  const camperPrice = Number(camper?.price);
+  const formattedPrice = Number.isFinite(camperPrice)
+    ? camperPrice.toFixed(2)
+    : "0.00";
 
   useEffect(() => {
     dispatch(fetchCamperById(id));
@@ -37,16 +42,17 @@ export default function CamperDetailsPage() {
   // Loader / Error
   if (isLoading) {
     return (
-      <div style={{ padding: "20px" }}>
+      <div className={styles.camperDetailsPage}>
         <p>Loading camper...</p>
       </div>
     );
   }
-  if (error) return <p style={{ color: "red" }}>Error: {error}</p>;
-  if (!camper) return <p>Camper not found.</p>;
+  if (error) return <p className={styles.camperDetailsError}>Error: {error}</p>;
+  if (!camper)
+    return <p className={styles.camperDetailsEmpty}>Camper not found.</p>;
 
   return (
-    <div style={{ padding: "20px" }}>
+    <div className={styles.camperDetailsPage}>
       <h1>{camper.name}</h1>
 
       <RatingLocation
@@ -55,30 +61,19 @@ export default function CamperDetailsPage() {
         location={camper.location}
       />
 
-      <p style={{ fontSize: "20px", fontWeight: "600" }}>
-        € {Number(camper.price).toFixed(2)}
-      </p>
+      <p className={styles.camperDetailsPrice}>€ {formattedPrice}</p>
 
       {/* Галерея */}
       <CamperGallery gallery={camper.gallery || []} />
 
-      <p style={{ marginBottom: "30px", color: "#475467" }}>
-        {camper.description}
-      </p>
+      <p className={styles.camperDetailsDescription}>{camper.description}</p>
 
       {/* Tabs */}
       <CamperTabs activeTab={activeTab} onChange={setActiveTab} />
 
-      <div
-        style={{
-          display: "flex",
-          gap: "40px",
-          marginTop: "20px",
-          alignItems: "flex-start",
-        }}
-      >
+      <div className={styles.camperDetailsContent}>
         {/* LEFT SIDE */}
-        <div style={{ flex: 2 }}>
+        <div className={styles.camperDetailsMain}>
           {activeTab === "features" && <FeaturesSection camper={camper} />}
           {activeTab === "reviews" && (
             <ReviewsSection reviews={camper.reviews} />
@@ -86,7 +81,7 @@ export default function CamperDetailsPage() {
         </div>
 
         {/* RIGHT SIDE */}
-        <div style={{ flex: 1 }}>
+        <div className={styles.camperDetailsSidebar}>
           <BookingForm camperId={camper.id} />
         </div>
       </div>

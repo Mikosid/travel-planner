@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import styles from "./BookingForm.module.css";
 
 export default function BookingForm({ camperId }) {
   const [name, setName] = useState("");
@@ -6,6 +7,15 @@ export default function BookingForm({ camperId }) {
   const [date, setDate] = useState("");
   const [comment, setComment] = useState("");
   const [success, setSuccess] = useState(false);
+  const successTimerRef = useRef(null);
+
+  useEffect(() => {
+    return () => {
+      if (successTimerRef.current) {
+        clearTimeout(successTimerRef.current);
+      }
+    };
+  }, []);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -19,51 +29,30 @@ export default function BookingForm({ camperId }) {
     setDate("");
     setComment("");
 
-    setTimeout(() => setSuccess(false), 3000);
+    if (successTimerRef.current) {
+      clearTimeout(successTimerRef.current);
+    }
+    successTimerRef.current = setTimeout(() => setSuccess(false), 3000);
   };
 
   return (
-    <div
-      style={{
-        border: "1px solid #E4E7EC",
-        padding: "24px",
-        borderRadius: "12px",
-        background: "#fff",
-        width: "100%",
-        maxWidth: "400px",
-      }}
-    >
-      <h3 style={{ marginBottom: "8px" }}>Book your camper now</h3>
+    <div className={styles.bookingForm}>
+      <h3 className={styles.title}>Book your camper now</h3>
 
-      <p style={{ fontSize: "14px", color: "#667085", marginBottom: "20px" }}>
+      <p className={styles.subtitle}>
         Stay connected! We are always ready to help you.
       </p>
 
-      {success && (
-        <p style={{ color: "green", marginBottom: "10px" }}>
-          Booking successful!
-        </p>
-      )}
+      {success && <p className={styles.successMessage}>Booking successful!</p>}
 
-      <form
-        onSubmit={handleSubmit}
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          gap: "12px",
-        }}
-      >
+      <form onSubmit={handleSubmit} className={styles.form}>
         <input
           type="text"
           placeholder="Name*"
           value={name}
           onChange={(e) => setName(e.target.value)}
           required
-          style={{
-            padding: "10px",
-            borderRadius: "8px",
-            border: "1px solid #ddd",
-          }}
+          className={styles.input}
         />
 
         <input
@@ -72,11 +61,7 @@ export default function BookingForm({ camperId }) {
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           required
-          style={{
-            padding: "10px",
-            borderRadius: "8px",
-            border: "1px solid #ddd",
-          }}
+          className={styles.input}
         />
 
         <input
@@ -84,11 +69,7 @@ export default function BookingForm({ camperId }) {
           value={date}
           onChange={(e) => setDate(e.target.value)}
           required
-          style={{
-            padding: "10px",
-            borderRadius: "8px",
-            border: "1px solid #ddd",
-          }}
+          className={styles.input}
         />
 
         <textarea
@@ -96,25 +77,10 @@ export default function BookingForm({ camperId }) {
           value={comment}
           onChange={(e) => setComment(e.target.value)}
           rows={4}
-          style={{
-            padding: "10px",
-            borderRadius: "8px",
-            border: "1px solid #ddd",
-          }}
+          className={styles.input}
         />
 
-        <button
-          type="submit"
-          style={{
-            padding: "12px",
-            borderRadius: "8px",
-            border: "none",
-            background: "#E44848",
-            color: "white",
-            fontWeight: "600",
-            cursor: "pointer",
-          }}
-        >
+        <button type="submit" className={styles.submitButton}>
           Send
         </button>
       </form>
